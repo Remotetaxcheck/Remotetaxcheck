@@ -1398,7 +1398,7 @@ function copyText() {
   if (!window._lastResult) return;
   const { state: s, result: r } = window._lastResult;
   const levelEmoji = { green: '🟢', amber: '🟡', red: '🔴' };
-  const text = `RemoteTaxCheck Assessment\n${s.employerCountry} employer · ${s.workerCountry} worker · ${s.daysPresent} days · ${s.classification}\n\n${levelEmoji[r.incomeLevel]} Income Tax: ${r.incomeLevel.toUpperCase()}\n${levelEmoji[r.peLevel]} PE Risk: ${r.peLevel.toUpperCase()}\n${levelEmoji[r.payrollLevel]} Payroll: ${r.payrollLevel.toUpperCase()}\n\nFull assessment: https://www.remotetaxcheck.com`;
+  const text = `RemoteTaxCheck Assessment\n${s.employerCountry} employer · ${s.workerCountry} worker · ${s.daysPresent} days · ${s.classification}\n\n${levelEmoji[r.incomeLevel]} Income Tax: ${r.incomeLevel.toUpperCase()}\n${levelEmoji[r.peLevel]} PE Risk: ${r.peLevel.toUpperCase()}\n${levelEmoji[r.payrollLevel]} Payroll: ${r.payrollLevel.toUpperCase()}\n\nFull assessment: https://remotetaxcheck.github.io`;
   navigator.clipboard.writeText(text).then(() => showToast('Summary copied to clipboard'));
 }
 
