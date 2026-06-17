@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Remote Tax Check — Cross-Border Remote Work Tax Risk Checker</title>
+  <meta name="description" content="Find out your cross-border tax risk in 90 seconds. Free tool for remote workers and employers — no signup, no upload, instant results." />
+  <meta property="og:title" content="Remote Tax Check — Cross-Border Remote Work Tax Risk Checker" />
+  <meta property="og:description" content="Working remotely across borders? Find out your income tax exposure, permanent establishment risk, and payroll obligations instantly." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.remotetaxcheck.com" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://www.remotetaxcheck.com" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── TOKENS ─────────────────────────────────────────── */
+    :root {
+      --bg:         #F7F8FA;
+      --surface:    #FFFFFF;
+      --border:     #E4E7ED;
+      --text:       #1A1D23;
+      --muted:      #6B7280;
+      --accent:     #1D4ED8;
+      --accent-lt:  #EFF4FF;
+      --green:      #059669;
+      --green-lt:   #ECFDF5;
+      --amber:      #D97706;
+      --amber-lt:   #FFFBEB;
+      --red:        #DC2626;
+      --red-lt:     #FEF2F2;
+      --radius:     12px;
+      --radius-sm:  8px;
+      --shadow:     0 1px 4px rgba(0,0,0,.08);
+      --shadow-md:  0 4px 16px rgba(0,0,0,.10);
+      --font-head:  'Sora', sans-serif;
+      --font-body:  'Inter', sans-serif;
+    }
+    [data-theme="dark"] {
+      --bg:        #0F1117;
+      --surface:   #1A1D27;
+      --border:    #2A2D38;
+      --text:      #E8EAF0;
+      --muted:     #9CA3AF;
+      --accent:    #3B82F6;
+      --accent-lt: #1E2A45;
+      --green-lt:  #052E1C;
+      --amber-lt:  #2D1A00;
+      --red-lt:    #2D0A0A;
+    }
+
+    /* ── RESET ──────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.65;
+      transition: background .25s, color .25s;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img { max-width: 100%; display: block; }
+
+    /* ── LAYOUT ─────────────────────────────────────────── */
+    .container { max-width: 760px; margin: 0 auto; padding: 0 20px; }
+    .container--wide { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+
+    /* ── HEADER ─────────────────────────────────────────── */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+      box-shadow: var(--shadow);
+    }
+    .header-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      max-width: 960px; margin: 0 auto; padding: 0 20px;
+    }
+    .logo {
+      font-family: var(--font-head);
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--text); letter-spacing: -.02em;
+    }
+    .logo span { color: var(--accent); }
+    nav { display: flex; align-items: center; gap: 24px; }
+    nav a {
+      font-size: .875rem; font-weight: 500;
+      color: var(--muted); transition: color .15s;
+    }
+    nav a:hover { color: var(--text); text-decoration: none; }
+    .theme-toggle {
+      background: var(--border); border: none; cursor: pointer;
+      width: 38px; height: 22px; border-radius: 11px;
+      position: relative; transition: background .25s; flex-shrink: 0;
+    }
+    .theme-toggle::after {
+      content: ''; position: absolute;
+      width: 16px; height: 16px; border-radius: 50%;
+      background: var(--surface); top: 3px; left: 3px;
+      transition: transform .25s, background .25s;
+      box-shadow: 0 1px 3px rgba(0,0,0,.2);
+    }
+    [data-theme="dark"] .theme-toggle { background: var(--accent); }
+    [data-theme="dark"] .theme-toggle::after { transform: translateX(16px); }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+
+    /* ── HERO ───────────────────────────────────────────── */
+    .hero {
+      padding: 56px 0 40px;
+      text-align: center;
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: .75rem; font-weight: 600; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--accent);
+      background: var(--accent-lt); padding: 4px 12px;
+      border-radius: 20px; margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-family: var(--font-head);
+      font-size: clamp(1.75rem, 4vw, 2.6rem);
+      font-weight: 700; line-height: 1.2;
+      letter-spacing: -.03em; color: var(--text);
+      margin-bottom: 16px;
+    }
+    .hero h1 em { color: var(--accent); font-style: normal; }
+    .hero-sub {
+      font-size: 1.05rem; color: var(--muted);
+      max-width: 540px; margin: 0 auto 32px;
+      line-height: 1.7;
+    }
+    .hero-badges {
+      display: flex; flex-wrap: wrap; justify-content: center;
+      gap: 10px; margin-bottom: 40px;
+    }
+    .badge {
+      display: flex; align-items: center; gap: 6px;
+      font-size: .8rem; font-weight: 500; color: var(--muted);
+      background: var(--surface); border: 1px solid var(--border);
+      padding: 5px 12px; border-radius: 20px;
+    }
+    .badge svg { width: 14px; height: 14px; color: var(--green); }
+
+    /* ── HOW TO USE ─────────────────────────────────────── */
+    .how-to {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 32px; margin-bottom: 36px;
+    }
+    .how-to h2 {
+      font-family: var(--font-head);
+      font-size: 1rem; font-weight: 600;
+      margin-bottom: 18px; color: var(--text);
+    }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .step { display: flex; gap: 12px; align-items: flex-start; }
+    .step-num {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--accent); color: #fff;
+      font-size: .8rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 2px;
+    }
+    .step p { font-size: .875rem; color: var(--muted); line-height: 1.5; }
+    .step strong { color: var(--text); display: block; margin-bottom: 2px; }
+
+    /* ── AD SLOT TOP ────────────────────────────────────── */
+    .ad-slot {
+      background: var(--border);
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted); font-size: .75rem;
+      text-transform: uppercase; letter-spacing: .05em;
+      margin: 24px 0;
+    }
+    .ad-slot--banner { height: 90px; }
+    .ad-slot--rect { height: 250px; }
+
+    /* ── TOOL CARD ──────────────────────────────────────── */
+    .tool-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-md);
+      overflow: hidden; margin-bottom: 48px;
+    }
+
+    /* ── PROGRESS BAR ───────────────────────────────────── */
+    .progress-header {
+      padding: 20px 28px 0;
+    }
+    .progress-labels {
+      display: flex; justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .progress-label {
+      font-size: .75rem; font-weight: 600; color: var(--muted);
+      transition: color .2s;
+    }
+    .progress-label.active { color: var(--accent); }
+    .progress-label.done { color: var(--green); }
+    .progress-track {
+      height: 4px; background: var(--border); border-radius: 2px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%; background: var(--accent);
+      border-radius: 2px;
+      transition: width .4s ease;
+    }
+
+    /* ── STEP PANELS ────────────────────────────────────── */
+    .step-panel { display: none; padding: 28px; }
+    .step-panel.active { display: block; }
+    .step-title {
+      font-family: var(--font-head);
+      font-size: 1.15rem; font-weight: 700;
+      color: var(--text); margin-bottom: 6px;
+    }
+    .step-desc { font-size: .875rem; color: var(--muted); margin-bottom: 24px; }
+
+    /* ── FORM FIELDS ────────────────────────────────────── */
+    .field { margin-bottom: 20px; }
+    .field label {
+      display: block; font-size: .875rem; font-weight: 500;
+      color: var(--text); margin-bottom: 7px;
+    }
+    .field label span { color: var(--muted); font-weight: 400; font-size: .8rem; }
+    select, input[type="number"] {
+      width: 100%; padding: 11px 14px;
+      background: var(--bg); border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm); font-size: .95rem;
+      color: var(--text); font-family: var(--font-body);
+      transition: border-color .15s;
+      appearance: none; -webkit-appearance: none;
+    }
+    select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 36px; }
+    select:focus, input:focus {
+      outline: none; border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(29,78,216,.12);
+    }
+    input[type="number"]::-webkit-inner-spin-button { opacity: 1; }
+
+    /* ── TOGGLE BUTTONS ─────────────────────────────────── */
+    .toggle-group { display: flex; gap: 10px; flex-wrap: wrap; }
+    .toggle-btn {
+      flex: 1; min-width: 120px;
+      padding: 10px 16px; border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border);
+      background: var(--bg); color: var(--muted);
+      font-size: .875rem; font-weight: 500;
+      cursor: pointer; transition: all .15s;
+      font-family: var(--font-body); text-align: center;
+    }
+    .toggle-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .toggle-btn.selected {
+      background: var(--accent-lt); border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* ── NAV BUTTONS ────────────────────────────────────── */
+    .btn-row {
+      display: flex; justify-content: space-between;
+      align-items: center; margin-top: 28px; gap: 12px;
+    }
+    .btn {
+      padding: 12px 28px; border-radius: var(--radius-sm);
+      font-size: .95rem; font-weight: 600;
+      cursor: pointer; transition: all .15s;
+      font-family: var(--font-body); border: none;
+    }
+    .btn-primary {
+      background: var(--accent); color: #fff; flex: 1;
+    }
+    .btn-primary:hover { background: #1a44c2; }
+    .btn-secondary {
+      background: var(--bg); color: var(--muted);
+      border: 1.5px solid var(--border);
+    }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+    .btn:disabled { opacity: .4; cursor: not-allowed; }
+
+    /* ── RESULTS ────────────────────────────────────────── */
+    #results { display: none; padding: 28px; }
+    .result-header { margin-bottom: 24px; }
+    .result-header h2 {
+      font-family: var(--font-head);
+      font-size: 1.3rem; font-weight: 700; margin-bottom: 6px;
+    }
+    .result-header p { font-size: .875rem; color: var(--muted); }
+
+    .risk-cards { display: grid; gap: 14px; margin-bottom: 24px; }
+    .risk-card {
+      border-radius: var(--radius-sm);
+      padding: 18px 20px;
+      border: 1.5px solid;
+    }
+    .risk-card.green { background: var(--green-lt); border-color: #86EFAC; }
+    .risk-card.amber { background: var(--amber-lt); border-color: #FCD34D; }
+    .risk-card.red   { background: var(--red-lt);   border-color: #FCA5A5; }
+
+    .risk-card-head {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 10px;
+    }
+    .risk-badge {
+      font-size: .7rem; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase; padding: 3px 10px; border-radius: 20px;
+    }
+    .green .risk-badge { background: var(--green); color: #fff; }
+    .amber .risk-badge { background: var(--amber); color: #fff; }
+    .red   .risk-badge { background: var(--red);   color: #fff; }
+
+    .risk-title {
+      font-weight: 600; font-size: .95rem; color: var(--text);
+    }
+    .risk-body { font-size: .875rem; color: var(--text); line-height: 1.65; }
+
+    .next-steps {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 18px 20px;
+      margin-bottom: 20px;
+    }
+    .next-steps h3 {
+      font-size: .95rem; font-weight: 600; margin-bottom: 12px;
+    }
+    .next-steps ul { padding-left: 18px; }
+    .next-steps li {
+      font-size: .875rem; color: var(--muted);
+      margin-bottom: 7px; line-height: 1.5;
+    }
+
+    .disclaimer-box {
+      font-size: .8rem; color: var(--muted);
+      border-top: 1px solid var(--border); padding-top: 16px;
+      margin-top: 4px; line-height: 1.6;
+    }
+
+    .result-actions {
+      display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;
+    }
+    .btn-share {
+      display: flex; align-items: center; gap: 6px;
+      padding: 9px 18px; border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border);
+      background: var(--bg); color: var(--muted);
+      font-size: .875rem; font-weight: 500;
+      cursor: pointer; font-family: var(--font-body);
+      transition: all .15s;
+    }
+    .btn-share:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-restart {
+      padding: 9px 18px; border-radius: var(--radius-sm);
+      background: var(--accent); color: #fff;
+      font-size: .875rem; font-weight: 600;
+      cursor: pointer; font-family: var(--font-body);
+      border: none; transition: background .15s;
+    }
+    .btn-restart:hover { background: #1a44c2; }
+
+    /* ── UNDERSTANDING RESULTS ──────────────────────────── */
+    .section { padding: 48px 0; }
+    .section + .section { padding-top: 0; }
+    .section-label {
+      font-size: .75rem; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 10px;
+    }
+    .section h2 {
+      font-family: var(--font-head);
+      font-size: 1.5rem; font-weight: 700;
+      color: var(--text); margin-bottom: 16px;
+      letter-spacing: -.02em;
+    }
+    .section p { color: var(--muted); margin-bottom: 14px; font-size: .95rem; }
+
+    .result-explainers { display: grid; gap: 14px; margin-top: 24px; }
+    .explainer {
+      display: flex; gap: 14px; align-items: flex-start;
+      padding: 16px 18px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+    }
+    .explainer-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      margin-top: 6px; flex-shrink: 0;
+    }
+    .explainer-dot.green { background: var(--green); }
+    .explainer-dot.amber { background: var(--amber); }
+    .explainer-dot.red   { background: var(--red); }
+    .explainer h3 { font-size: .9rem; font-weight: 600; margin-bottom: 4px; }
+    .explainer p  { font-size: .85rem; color: var(--muted); margin: 0; }
+
+    /* ── SCENARIOS ──────────────────────────────────────── */
+    .scenarios { display: grid; gap: 14px; margin-top: 24px; }
+    .scenario {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 18px 20px;
+    }
+    .scenario-head {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 8px;
+    }
+    .scenario h3 { font-size: .9rem; font-weight: 600; }
+    .scenario p  { font-size: .85rem; color: var(--muted); line-height: 1.55; }
+
+    /* ── FAQ ────────────────────────────────────────────── */
+    .faq { margin-top: 24px; }
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+    .faq-q {
+      width: 100%; text-align: left;
+      background: none; border: none; cursor: pointer;
+      padding: 16px 0; display: flex; justify-content: space-between;
+      align-items: center; gap: 12px;
+      font-size: .95rem; font-weight: 500; color: var(--text);
+      font-family: var(--font-body);
+    }
+    .faq-q svg { flex-shrink: 0; transition: transform .2s; color: var(--muted); }
+    .faq-item.open .faq-q svg { transform: rotate(180deg); }
+    .faq-a {
+      display: none; padding-bottom: 16px;
+      font-size: .875rem; color: var(--muted); line-height: 1.7;
+    }
+    .faq-item.open .faq-a { display: block; }
+
+    /* ── ARTICLES GRID ──────────────────────────────────── */
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px; margin-top: 24px;
+    }
+    .article-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 18px;
+      transition: box-shadow .15s, border-color .15s;
+      display: flex; flex-direction: column;
+    }
+    .article-card:hover {
+      box-shadow: var(--shadow-md); border-color: var(--accent);
+      text-decoration: none;
+    }
+    .article-tag {
+      font-size: .7rem; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .article-card h3 {
+      font-size: .9rem; font-weight: 600; color: var(--text);
+      line-height: 1.4; flex: 1;
+    }
+    .article-card span {
+      font-size: .8rem; color: var(--muted); margin-top: 10px;
+    }
+
+    /* ── FOOTER ─────────────────────────────────────────── */
+    footer {
+      background: var(--surface); border-top: 1px solid var(--border);
+      padding: 40px 0 28px;
+    }
+    .footer-inner {
+      max-width: 960px; margin: 0 auto; padding: 0 20px;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr;
+      gap: 40px; margin-bottom: 32px;
+    }
+    .footer-brand p {
+      font-size: .875rem; color: var(--muted);
+      margin-top: 10px; line-height: 1.6; max-width: 260px;
+    }
+    .footer-col h4 {
+      font-size: .8rem; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 14px;
+    }
+    .footer-col a {
+      display: block; font-size: .875rem; color: var(--muted);
+      margin-bottom: 10px; transition: color .15s;
+    }
+    .footer-col a:hover { color: var(--text); text-decoration: none; }
+    .footer-bottom {
+      border-top: 1px solid var(--border); padding-top: 20px;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 10px;
+    }
+    .footer-bottom p { font-size: .8rem; color: var(--muted); }
+    .updated-badge {
+      font-size: .75rem; background: var(--green-lt);
+      color: var(--green); padding: 3px 10px; border-radius: 20px;
+      font-weight: 500;
+    }
+
+    /* ── TOAST ──────────────────────────────────────────── */
+    .toast {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      background: var(--text); color: var(--bg);
+      padding: 10px 20px; border-radius: 20px;
+      font-size: .875rem; font-weight: 500;
+      opacity: 0; transition: opacity .3s; pointer-events: none; z-index: 999;
+    }
+    .toast.show { opacity: 1; }
+
+    /* ── RESPONSIVE ─────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .steps { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+      nav a { display: none; }
+      .hero { padding: 36px 0 28px; }
+      .how-to { padding: 20px; }
+      .step-panel { padding: 20px; }
+      #results { padding: 20px; }
+      .articles-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .toggle-btn { min-width: 100%; flex: none; }
+      .toggle-group { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── HEADER ──────────────────────────────────────────── -->
+<header>
+  <div class="header-inner">
+    <a href="/" class="logo">Remote<span>Tax</span>Check</a>
+    <nav>
+      <a href="/blog.html">Blog</a>
+      <a href="/about.html">About</a>
+      <a href="/contact.html">Contact</a>
+    </nav>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode"></button>
+    </div>
+  </div>
+</header>
+
+<!-- ── HERO ────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-eyebrow">Free · No signup · Instant results</div>
+    <h1>Is your remote work arrangement <em>legally compliant</em>?</h1>
+    <p class="hero-sub">Answer 9 quick questions and get an instant tax risk assessment for your cross-border remote work situation — income tax exposure, permanent establishment risk, and payroll obligations.</p>
+    <div class="hero-badges">
+      <div class="badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>
+        No data uploaded
+      </div>
+      <div class="badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>
+        Runs in your browser
+      </div>
+      <div class="badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>
+        Updated June 2026
+      </div>
+      <div class="badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>
+        Based on OECD 2025 guidelines
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+
+  <!-- ── AD SLOT TOP ───────────────────────────────────── -->
+  <div class="ad-slot ad-slot--banner">Advertisement</div>
+
+  <!-- ── HOW TO USE ─────────────────────────────────────── -->
+  <div class="how-to">
+    <h2>How to use this tool</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <p><strong>Enter your situation</strong>Fill in where your employer is based, where you physically work, and how long you've been there.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <p><strong>Describe the relationship</strong>Tell us if you're an employee or contractor, your role, and a few yes/no questions about the arrangement.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <p><strong>Get your risk report</strong>Instantly see your income tax exposure, PE risk, and payroll obligations — with plain-English next steps.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TOOL CARD ──────────────────────────────────────── -->
+  <div class="tool-card" id="toolCard">
+
+    <!-- Progress -->
+    <div class="progress-header">
+      <div class="progress-labels">
+        <span class="progress-label active" id="lbl1">Step 1 — Jurisdictions</span>
+        <span class="progress-label" id="lbl2">Step 2 — Relationship</span>
+        <span class="progress-label" id="lbl3">Step 3 — Risk Profile</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill" style="width:33%"></div>
+      </div>
+    </div>
+
+    <!-- STEP 1 -->
+    <div class="step-panel active" id="panel1">
+      <div class="step-title">Where is the work happening?</div>
+      <div class="step-desc">Tell us where the employer is based and where you physically live and work.</div>
+
+      <div class="field">
+        <label>Employer's country <span>(where the company is registered)</span></label>
+        <select id="employerCountry">
+          <option value="">Select employer country…</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Your physical country <span>(where you actually live and work)</span></label>
+        <select id="workerCountry">
+          <option value="">Select your country…</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Days physically present in your country this year <span>(approximate)</span></label>
+        <input type="number" id="daysPresent" min="1" max="366" placeholder="e.g. 120" />
+      </div>
+
+      <div class="field">
+        <label>Is this arrangement permanent or temporary?</label>
+        <div class="toggle-group">
+          <button class="toggle-btn" data-group="permanent" data-val="permanent">Permanent / ongoing</button>
+          <button class="toggle-btn" data-group="permanent" data-val="temporary">Temporary / project-based</button>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="goStep(2)">Continue →</button>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step-panel" id="panel2">
+      <div class="step-title">What is the working relationship?</div>
+      <div class="step-desc">These three questions change the legal picture significantly.</div>
+
+      <div class="field">
+        <label>Are you an employee or independent contractor?</label>
+        <div class="toggle-group">
+          <button class="toggle-btn" data-group="classification" data-val="employee">Employee</button>
+          <button class="toggle-btn" data-group="classification" data-val="contractor">Independent contractor</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Does the employer have an existing legal entity in your country? <span>(a registered company, subsidiary, or branch)</span></label>
+        <div class="toggle-group">
+          <button class="toggle-btn" data-group="entity" data-val="yes">Yes</button>
+          <button class="toggle-btn" data-group="entity" data-val="no">No</button>
+          <button class="toggle-btn" data-group="entity" data-val="unknown">Not sure</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Your citizenship country <span>(may differ from where you live)</span></label>
+        <select id="citizenshipCountry">
+          <option value="">Select citizenship country…</option>
+        </select>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="goStep(1)">← Back</button>
+        <button class="btn btn-primary" onclick="goStep(3)">Continue →</button>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step-panel" id="panel3">
+      <div class="step-title">What does your role involve?</div>
+      <div class="step-desc">Your job function is the single biggest factor in permanent establishment risk.</div>
+
+      <div class="field">
+        <label>Job function</label>
+        <div class="toggle-group" style="flex-wrap:wrap">
+          <button class="toggle-btn" data-group="jobFunction" data-val="technical">Technical / Developer</button>
+          <button class="toggle-btn" data-group="jobFunction" data-val="sales">Sales / Client-facing</button>
+          <button class="toggle-btn" data-group="jobFunction" data-val="executive">Executive / Management</button>
+          <button class="toggle-btn" data-group="jobFunction" data-val="administrative">Administrative</button>
+          <button class="toggle-btn" data-group="jobFunction" data-val="creative">Creative / Marketing</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Can you sign contracts on behalf of the company? <span>(legally binding agreements, deals, or commitments)</span></label>
+        <div class="toggle-group">
+          <button class="toggle-btn" data-group="signing" data-val="yes">Yes</button>
+          <button class="toggle-btn" data-group="signing" data-val="no">No</button>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="goStep(2)">← Back</button>
+        <button class="btn btn-primary" id="calculateBtn" onclick="calculate()">Get My Risk Report →</button>
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div id="results">
+      <div class="result-header">
+        <h2>Your Cross-Border Risk Assessment</h2>
+        <p id="resultSubtitle"></p>
+      </div>
+
+      <div class="risk-cards" id="riskCards"></div>
+
+      <div class="next-steps" id="nextStepsBox">
+        <h3 id="nextStepsTitle">Recommended next steps</h3>
+        <ul id="nextStepsList"></ul>
+      </div>
+
+      <div class="result-actions">
+        <button class="btn-share" onclick="copyLink()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          Copy shareable link
+        </button>
+        <button class="btn-share" onclick="copyText()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy result summary
+        </button>
+        <button class="btn-restart" onclick="restart()">Check another situation</button>
+      </div>
+
+      <div class="disclaimer-box">
+        <strong>Important:</strong> This assessment is for informational purposes only and does not constitute legal or tax advice. Tax laws change frequently and vary by individual circumstances. Always consult a qualified tax professional or employment lawyer before making decisions based on this tool.
+      </div>
+    </div>
+  </div><!-- /tool-card -->
+
+  <!-- ── UNDERSTANDING YOUR RESULTS ─────────────────────── -->
+  <section class="section">
+    <div class="section-label">Understanding your results</div>
+    <h2>What does each risk level mean?</h2>
+    <p>Our tool checks three separate risk categories for your situation. Each one gets its own colour-coded rating based on the information you provide.</p>
+    <div class="result-explainers">
+      <div class="explainer">
+        <div class="explainer-dot green"></div>
+        <div>
+          <h3>Green — Low risk</h3>
+          <p>Your situation is unlikely to trigger tax obligations or compliance issues based on current rules. You should still monitor your days and keep your situation documented.</p>
+        </div>
+      </div>
+      <div class="explainer">
+        <div class="explainer-dot amber"></div>
+        <div>
+          <h3>Amber — Moderate risk</h3>
+          <p>There are factors in your situation that create real exposure. You do not need to panic, but you do need to take action. Speaking to a professional soon is strongly recommended.</p>
+        </div>
+      </div>
+      <div class="explainer">
+        <div class="explainer-dot red"></div>
+        <div>
+          <h3>Red — High risk</h3>
+          <p>Your arrangement has serious legal or financial exposure that needs immediate attention. This does not mean you have done something wrong — but it does mean the current setup needs to change.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── AD SLOT MID ─────────────────────────────────────── -->
+  <div class="ad-slot ad-slot--banner">Advertisement</div>
+
+  <!-- ── COMMON SCENARIOS ───────────────────────────────── -->
+  <section class="section">
+    <div class="section-label">Common situations</div>
+    <h2>See how it works for real scenarios</h2>
+    <p>Here are four common cross-border remote work situations and how the tool assesses them.</p>
+    <div class="scenarios">
+      <div class="scenario">
+        <div class="scenario-head">
+          <span class="risk-badge" style="background:#059669;color:#fff">Low Risk</span>
+          <h3>US employer · Nigeria contractor · 90 days · Technical role</h3>
+        </div>
+        <p>An independent contractor writing code for a US company from Nigeria, working there 90 days. No signing authority, no permanent arrangement. Result: minimal corporate tax exposure and no payroll withholding obligation.</p>
+      </div>
+      <div class="scenario">
+        <div class="scenario-head">
+          <span class="risk-badge" style="background:#D97706;color:#fff">Moderate Risk</span>
+          <h3>UK employer · Portugal employee · 150 days · Technical role</h3>
+        </div>
+        <p>A developer employed by a UK company working permanently from Portugal for 150 days. A UK-Portugal tax treaty exists. Risk is moderate — approaching the 183-day threshold and a treaty claim needs to be filed to avoid double taxation.</p>
+      </div>
+      <div class="scenario">
+        <div class="scenario-head">
+          <span class="risk-badge" style="background:#DC2626;color:#fff">High Risk</span>
+          <h3>US employer · UK employee · 200 days · Executive with signing authority</h3>
+        </div>
+        <p>A senior executive employed by a US company, living in the UK for 200 days with authority to sign contracts. This triggers UK tax residency, creates a high PE risk for the employer, and requires urgent payroll restructuring.</p>
+      </div>
+      <div class="scenario">
+        <div class="scenario-head">
+          <span class="risk-badge" style="background:#D97706;color:#fff">Moderate Risk</span>
+          <h3>Germany employer · Philippines employee · Permanent · Sales role</h3>
+        </div>
+        <p>A sales employee permanently based in the Philippines working for a German company. The sales function combined with permanent arrangement creates moderate PE risk even though a Germany-Philippines tax treaty exists.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FAQ ───────────────────────────────────────────── -->
+  <section class="section">
+    <div class="section-label">Frequently asked questions</div>
+    <h2>Questions people ask before using this tool</h2>
+    <div class="faq" id="faqContainer">
+
+      <div class="faq-item">
+        <button class="faq-q">What is the 183-day rule and does it apply to my country?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="faq-a">The 183-day rule is the most common threshold countries use to determine tax residency — if you spend more than 183 days in a country in a calendar year, you generally become a tax resident there. However, several countries use different thresholds: the UK uses a complex ties-based test where even 46 days can trigger residency, the US uses a weighted three-year formula, and countries like Thailand (180 days), Malaysia (182 days), and Cyprus (60 days) have their own variations. Our tool applies the correct threshold for your specific country.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">What is permanent establishment risk and why does it matter?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="faq-a">Permanent establishment (PE) means your employer is considered to have a taxable business presence in your country — even if they have no office there. If a PE is triggered, your employer could owe corporate income tax in your country. This is a serious exposure for the company, not just for you. The biggest triggers are: having an employee with authority to sign contracts, having a sales or executive employee working there long-term, or having an employee who spends more than 50% of their working time there serving local clients.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Does this tool account for tax treaties between countries?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="faq-a">Yes. The tool checks whether a tax treaty exists between your employer country and your physical country for all common country combinations. Tax treaties can significantly reduce double taxation risk and our assessment takes this into account. However, treaty benefits are not automatic — they generally need to be actively claimed on your tax return. For less common country combinations, the tool applies general OECD principles and flags where you should verify treaty status.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">I am a contractor, not an employee. Does this still apply to me?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="faq-a">Yes, but your risk profile is very different. Independent contractors rarely create permanent establishment risk for the engaging company, and you handle your own tax obligations rather than triggering employer payroll requirements. However, you are still responsible for declaring and paying income tax in your country of residence. The tool explains what that means for your specific situation. One critical warning: if your arrangement looks like employment in practice — fixed hours, one client, employer control — tax authorities may reclassify you as an employee regardless of what the contract says.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">How accurate is this assessment?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="faq-a">This tool reflects current OECD guidelines (updated November 2025), bilateral treaty data, and country-specific tax residency rules as of June 2026. It is designed to give you an accurate general risk assessment for the most common cross-border remote work situations. However, no online tool can replace a qualified tax professional for your specific circumstances — particularly for high-risk situations. We update the underlying rules quarterly.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">What is an Employer of Record and should I use one?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="faq-a">An Employer of Record (EOR) is a third-party company that legally employs workers on behalf of another company in a foreign country. If you are an employee working long-term in a country where your employer has no legal entity, an EOR is often the cleanest solution — it handles local payroll, tax registrations, and employment law compliance. Services like Deel, Remote.com, and Rippling offer this. Our tool recommends an EOR where it is relevant to your situation.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">My country is not showing in the results or the data seems different. Why?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="faq-a">We have detailed data for the most common cross-border remote work country combinations. For less common pairings, the tool applies universal OECD principles and clearly flags this in your result. Tax rules also change — we update quarterly but if you believe the data for your country is outdated, please contact us and we will review it.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Is my data stored or shared anywhere?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="faq-a">No. This tool runs entirely in your browser. We do not collect, store, or transmit any of the information you enter. Nothing is sent to a server. You can verify this by using the tool without an internet connection after the page loads.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── RELATED ARTICLES ───────────────────────────────── -->
+  <section class="section">
+    <div class="section-label">Learn more</div>
+    <h2>From the RemoteTaxCheck blog</h2>
+    <p>Plain-English guides to the situations our tool covers most often.</p>
+    <div class="articles-grid">
+      <a href="/blog/moved-to-portugal-uk-employer.html" class="article-card">
+        <div class="article-tag">Income Tax</div>
+        <h3>I moved to Portugal but my employer is still in London — do I owe tax twice?</h3>
+        <span>8 min read →</span>
+      </a>
+      <a href="/blog/183-day-rule-explained.html" class="article-card">
+        <div class="article-tag">Tax Residency</div>
+        <h3>The 183-day rule explained without the lawyer speak</h3>
+        <span>6 min read →</span>
+      </a>
+      <a href="/blog/permanent-establishment-plain-english.html" class="article-card">
+        <div class="article-tag">PE Risk</div>
+        <h3>What actually happens if your remote worker stays too long in another country</h3>
+        <span>7 min read →</span>
+      </a>
+      <a href="/blog/contractor-vs-employee-abroad.html" class="article-card">
+        <div class="article-tag">Contractor vs Employee</div>
+        <h3>Contractor vs employee abroad — why the difference could cost your company thousands</h3>
+        <span>9 min read →</span>
+      </a>
+      <a href="/blog/job-title-matters-more-than-location.html" class="article-card">
+        <div class="article-tag">PE Risk</div>
+        <h3>Why your job title matters more than your location for cross-border tax</h3>
+        <span>5 min read →</span>
+      </a>
+      <a href="/blog/digital-nomad-visa-vs-tax-residency.html" class="article-card">
+        <div class="article-tag">Digital Nomads</div>
+        <h3>Digital nomad visa vs tax residency — they are not the same thing</h3>
+        <span>7 min read →</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── AD SLOT BOTTOM ─────────────────────────────────── -->
+  <div class="ad-slot ad-slot--banner" style="margin-bottom:48px">Advertisement</div>
+
+</div><!-- /container -->
+
+<!-- ── FOOTER ──────────────────────────────────────────── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">Remote<span style="color:var(--accent)">Tax</span>Check</div>
+        <p>A free tool helping remote workers and employers understand cross-border tax risk. Based on OECD 2025 guidelines. Updated quarterly.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Tools</h4>
+        <a href="/">Risk Checker</a>
+        <a href="/blog.html">Blog</a>
+        <a href="/about.html">About</a>
+        <a href="/contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms of Service</a>
+        <a href="/disclaimer.html">Disclaimer</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 RemoteTaxCheck. For informational purposes only. Not legal or tax advice.</p>
+      <span class="updated-badge">Last updated: June 2026</span>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ── COUNTRY DATA ─────────────────────────────────────── */
+const COUNTRIES = [
+  "Afghanistan","Albania","Algeria","Angola","Argentina","Armenia","Australia",
+  "Austria","Azerbaijan","Bahrain","Bangladesh","Belarus","Belgium","Bolivia",
+  "Bosnia and Herzegovina","Brazil","Bulgaria","Cambodia","Cameroon","Canada",
+  "Chile","China","Colombia","Croatia","Cyprus","Czech Republic","Denmark",
+  "Ecuador","Egypt","Estonia","Ethiopia","Finland","France","Georgia",
+  "Germany","Ghana","Greece","Guatemala","Hungary","Iceland","India",
+  "Indonesia","Ireland","Israel","Italy","Jamaica","Japan","Jordan","Kenya",
+  "Kosovo","Kuwait","Latvia","Lebanon","Lithuania","Luxembourg","Malaysia",
+  "Malta","Mexico","Moldova","Morocco","Mozambique","Myanmar","Nepal",
+  "Netherlands","New Zealand","Nigeria","Norway","Pakistan","Panama",
+  "Paraguay","Peru","Philippines","Poland","Portugal","Romania","Russia",
+  "Rwanda","Saudi Arabia","Senegal","Serbia","Singapore","Slovakia","Slovenia",
+  "South Africa","South Korea","Spain","Sri Lanka","Sweden","Switzerland",
+  "Taiwan","Tanzania","Thailand","Tunisia","Turkey","Uganda","Ukraine",
+  "United Arab Emirates","United Kingdom","United States","Uruguay",
+  "Uzbekistan","Venezuela","Vietnam","Zambia","Zimbabwe"
+];
+
+/* ── TAX TREATY DATABASE ──────────────────────────────── */
+const TREATIES = {
+  "United States": ["United Kingdom","Germany","France","Netherlands","Australia","Canada","Mexico","Philippines","India","Indonesia","Portugal","Spain","Poland","Romania","South Africa","Sri Lanka","Vietnam","Thailand","Bangladesh","Pakistan","Japan","South Korea","China","Israel","Belgium","Austria","Switzerland","Sweden","Norway","Denmark","Finland","Ireland","Italy","Greece","Czech Republic","Slovakia","Hungary","Bulgaria","Estonia","Latvia","Lithuania","Slovenia","Luxembourg","Malta","Cyprus","Morocco","Tunisia","Egypt","Jamaica","Trinidad","Venezuela","Kazakhstan","Ukraine","Georgia","Armenia","Azerbaijan","Kyrgyzstan","Moldova","Tajikistan","Turkmenistan","Uzbekistan","Belarus","New Zealand","Iceland","Barbados","Honduras"],
+  "United Kingdom": ["United States","Germany","France","Netherlands","Australia","Canada","Mexico","Philippines","India","Indonesia","Portugal","Spain","Poland","Romania","South Africa","Nigeria","Kenya","Vietnam","Thailand","Bangladesh","Pakistan","Sri Lanka","Brazil","Colombia","Japan","South Korea","China","Israel","Belgium","Austria","Switzerland","Sweden","Norway","Denmark","Finland","Ireland","Italy","Greece","Czech Republic","Slovakia","Hungary","Bulgaria","Estonia","Latvia","Lithuania","Slovenia","Luxembourg","Malta","Cyprus","Morocco","Tunisia","Egypt","Algeria","Argentina","Serbia","Croatia","Bosnia and Herzegovina","Albania","Kosovo","Georgia","Armenia","Azerbaijan","Ukraine","Moldova","Belarus","Russia","Kazakhstan","Uzbekistan","New Zealand","Iceland","Singapore","Malaysia","Ghana","Uganda","Rwanda","Tanzania","Zambia","Zimbabwe","Cameroon","Senegal","Jordan","Lebanon","Kuwait","Bahrain","Saudi Arabia","UAE"],
+  "Germany": ["United States","United Kingdom","France","Netherlands","Australia","Canada","Mexico","Philippines","India","Indonesia","Portugal","Spain","Poland","Romania","South Africa","Nigeria","Kenya","Vietnam","Thailand","Bangladesh","Pakistan","Sri Lanka","Brazil","Colombia","Argentina","Japan","South Korea","China","Israel","Belgium","Austria","Switzerland","Sweden","Norway","Denmark","Finland","Ireland","Italy","Greece","Czech Republic","Slovakia","Hungary","Bulgaria","Estonia","Latvia","Lithuania","Slovenia","Luxembourg","Malta","Cyprus","Morocco","Tunisia","Egypt","Algeria","Serbia","Croatia","Albania","Georgia","Armenia","Azerbaijan","Ukraine","Moldova","Belarus","Russia","Kazakhstan","Uzbekistan","New Zealand","Iceland","Singapore","Malaysia","Ghana","Ecuador","Uruguay","Iran","Kuwait","Saudi Arabia","UAE"],
+  "Australia": ["United Kingdom","United States","Germany","France","Netherlands","Canada","Japan","South Korea","China","India","Indonesia","New Zealand","Singapore","Malaysia","Thailand","Vietnam","Philippines","South Africa","Poland","Czech Republic","Slovakia","Norway","Finland","Denmark","Sweden","Belgium","Austria","Switzerland","Ireland","Italy","Greece","Spain","Portugal","Mexico","Argentina","Papua New Guinea","Fiji","Russia","Ukraine","Romania","Hungary","Taiwan","Sri Lanka","Pakistan","Bangladesh","Croatia","Slovenia"],
+  "Canada": ["United States","United Kingdom","Germany","France","Netherlands","Australia","Japan","South Korea","China","India","Indonesia","New Zealand","Singapore","Malaysia","Thailand","Vietnam","Philippines","South Africa","Poland","Czech Republic","Slovakia","Norway","Finland","Denmark","Sweden","Belgium","Austria","Switzerland","Ireland","Italy","Greece","Spain","Portugal","Mexico","Brazil","Argentina","Colombia","Peru","Ecuador","Uruguay","Russia","Ukraine","Romania","Hungary","Bulgaria","Croatia","Slovenia","Israel","Morocco","Algeria","Tunisia","Egypt","Nigeria","Kenya","Tanzania","Senegal","Pakistan","Bangladesh","Sri Lanka","Kazakhstan","Azerbaijan","Armenia","Moldova","Uzbekistan"],
+  "Netherlands": ["United States","United Kingdom","Germany","France","Australia","Canada","Japan","South Korea","China","India","Indonesia","New Zealand","Singapore","Malaysia","Thailand","Vietnam","Philippines","South Africa","Nigeria","Kenya","Poland","Czech Republic","Slovakia","Norway","Finland","Denmark","Sweden","Belgium","Austria","Switzerland","Ireland","Italy","Greece","Spain","Portugal","Mexico","Brazil","Argentina","Colombia","Peru","Ecuador","Uruguay","Russia","Ukraine","Romania","Hungary","Bulgaria","Croatia","Slovenia","Israel","Morocco","Algeria","Tunisia","Egypt","Ghana","Uganda","Tanzania","Rwanda","Zambia","Zimbabwe","Bangladesh","Sri Lanka","Pakistan","Kazakhstan","Azerbaijan","Armenia","Moldova","Uzbekistan","Belarus","Jordan","Bahrain","Kuwait","Saudi Arabia","UAE","Turkey"],
+  "Germany_extra": [],
+  "Singapore": ["United Kingdom","Australia","Germany","France","Netherlands","Canada","Japan","South Korea","China","India","Indonesia","New Zealand","Malaysia","Thailand","Vietnam","Philippines","South Africa","Poland","Czech Republic","Norway","Finland","Denmark","Sweden","Belgium","Austria","Switzerland","Ireland","Italy","Greece","Spain","Portugal","Mexico","Bangladesh","Sri Lanka","Pakistan","Kazakhstan","Ukraine","Romania","Hungary","Bulgaria","Croatia","Slovenia","Israel","Bahrain","Kuwait","UAE"],
+  "UAE": ["United Kingdom","Germany","France","Netherlands","India","Philippines","Indonesia","Pakistan","Bangladesh","Sri Lanka","Vietnam","Thailand","South Africa","Kenya","Nigeria","Egypt","Morocco","Algeria","Tunisia","Jordan","Lebanon","Belgium","Austria","Switzerland","Sweden","Norway","Denmark","Finland","Ireland","Italy","Greece","Spain","Portugal","China","Japan","South Korea","Singapore","Malaysia","Russia","Ukraine","Kazakhstan","Belarus","Armenia","Azerbaijan","Georgia","Moldova"],
+  "France": ["United States","United Kingdom","Germany","Netherlands","Australia","Canada","Japan","South Korea","China","India","Indonesia","New Zealand","Singapore","Malaysia","Thailand","Vietnam","Philippines","South Africa","Nigeria","Kenya","Poland","Czech Republic","Slovakia","Norway","Finland","Denmark","Sweden","Belgium","Austria","Switzerland","Ireland","Italy","Greece","Spain","Portugal","Mexico","Brazil","Argentina","Colombia","Peru","Ecuador","Uruguay","Russia","Ukraine","Romania","Hungary","Bulgaria","Croatia","Slovenia","Israel","Morocco","Algeria","Tunisia","Egypt","Ghana","Uganda","Tanzania","Rwanda","Bangladesh","Sri Lanka","Pakistan","Kazakhstan","Azerbaijan","Armenia","Moldova","Uzbekistan","Belarus","Jordan","Saudi Arabia","UAE","Turkey"],
+  "Ireland": ["United States","United Kingdom","Germany","France","Netherlands","Australia","Canada","Japan","South Korea","China","India","Philippines","South Africa","Mexico","Poland","Czech Republic","Slovakia","Norway","Finland","Denmark","Sweden","Belgium","Austria","Switzerland","Italy","Greece","Spain","Portugal","Romania","Hungary","Bulgaria","Croatia","Slovenia","Israel","Pakistan","Vietnam","Thailand","Malaysia","Singapore","New Zealand"],
+};
+
+/* ── RESIDENCY THRESHOLDS ─────────────────────────────── */
+const THRESHOLDS = {
+  "default": 183,
+  "United States": "formula", // weighted 3-year
+  "United Kingdom": "ties", // ties-based
+  "Thailand": 180,
+  "Malaysia": 182,
+  "India": 182,
+  "Pakistan": 182,
+  "Bangladesh": 182,
+  "Philippines": 180,
+  "Cyprus": 60,
+  "UAE": 183, // or 90 with centre of interests
+  "South Africa": 183, // plus 60 consecutive days
+  "Ireland": 183, // or 280 over 2 years
+};
+
+/* ── FORM STATE ───────────────────────────────────────── */
+const state = {
+  employerCountry: '', workerCountry: '', daysPresent: 0,
+  permanent: '', classification: '', entity: '',
+  citizenshipCountry: '', jobFunction: '', signing: ''
+};
+let currentStep = 1;
+
+/* ── POPULATE DROPDOWNS ───────────────────────────────── */
+function populateDropdowns() {
+  const opts = ['<option value="">Select…</option>',
+    ...COUNTRIES.map(c => `<option value="${c}">${c}</option>`)
+  ].join('');
+  ['employerCountry','workerCountry','citizenshipCountry'].forEach(id => {
+    document.getElementById(id).innerHTML = opts;
+  });
+}
+populateDropdowns();
+
+/* ── TOGGLE BUTTONS ───────────────────────────────────── */
+document.querySelectorAll('.toggle-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const group = btn.dataset.group;
+    document.querySelectorAll(`[data-group="${group}"]`).forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    state[group] = btn.dataset.val;
+  });
+});
+
+/* ── STEP NAVIGATION ──────────────────────────────────── */
+function goStep(n) {
+  // Collect step 1 values
+  if (n > 1) {
+    state.employerCountry = document.getElementById('employerCountry').value;
+    state.workerCountry   = document.getElementById('workerCountry').value;
+    state.daysPresent     = parseInt(document.getElementById('daysPresent').value) || 0;
+    if (!state.employerCountry || !state.workerCountry || !state.daysPresent) {
+      showToast('Please fill in all fields before continuing.');
+      return;
+    }
+    if (state.employerCountry === state.workerCountry) {
+      showToast('Employer and worker countries must be different for cross-border assessment.');
+      return;
+    }
+  }
+  if (n > 2) {
+    state.citizenshipCountry = document.getElementById('citizenshipCountry').value;
+    if (!state.classification || !state.entity || !state.citizenshipCountry) {
+      showToast('Please answer all questions before continuing.');
+      return;
+    }
+  }
+  document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById(`panel${n}`).classList.add('active');
+  currentStep = n;
+  updateProgress(n);
+  document.getElementById('toolCard').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function updateProgress(n) {
+  const fill = {1: '33%', 2: '66%', 3: '100%'}[n];
+  document.getElementById('progressFill').style.width = fill;
+  ['lbl1','lbl2','lbl3'].forEach((id, i) => {
+    const el = document.getElementById(id);
+    el.classList.remove('active','done');
+    if (i + 1 === n) el.classList.add('active');
+    if (i + 1 < n)  el.classList.add('done');
+  });
+}
+
+/* ── TREATY CHECK ─────────────────────────────────────── */
+function hasTreaty(ec, wc) {
+  const list = TREATIES[ec] || [];
+  return list.includes(wc);
+}
+
+/* ── THRESHOLD CHECK ──────────────────────────────────── */
+function getThreshold(country) {
+  return THRESHOLDS[country] || THRESHOLDS.default;
+}
+
+function exceedsThreshold(country, days) {
+  const t = getThreshold(country);
+  if (t === 'formula' || t === 'ties') return days > 120; // conservative proxy
+  return days >= t;
+}
+
+/* ── RISK LOGIC ───────────────────────────────────────── */
+function assessRisk() {
+  const { employerCountry, workerCountry, daysPresent,
+    permanent, classification, entity, citizenshipCountry,
+    jobFunction, signing } = state;
+
+  const isPermanent   = permanent === 'permanent';
+  const isEmployee    = classification === 'employee';
+  const hasEntity     = entity === 'yes';
+  const hasSigning    = signing === 'yes';
+  const isUSCitizen   = citizenshipCountry === 'United States';
+  const overThreshold = exceedsThreshold(workerCountry, daysPresent);
+  const treaty        = hasTreaty(employerCountry, workerCountry);
+  const knownEC       = !!TREATIES[employerCountry];
+  const threshold     = getThreshold(workerCountry);
+  const thresholdStr  = (threshold === 'formula') ? 'a weighted 3-year formula'
+    : (threshold === 'ties') ? 'a ties-based test (as low as 46 days)'
+    : `${threshold} days`;
+
+  // ── INCOME TAX ──────────────────────────────────────
+  let incomeLevel, incomeText;
+
+  if (!overThreshold && !isPermanent) {
+    incomeLevel = 'green';
+    incomeText = `With ${daysPresent} days in ${workerCountry} and a temporary arrangement, you have not yet crossed the local tax residency threshold (${thresholdStr}). Your income is most likely only taxable in your home country. Keep tracking your days carefully.`;
+  } else if (overThreshold || isPermanent) {
+    if (treaty) {
+      incomeLevel = 'amber';
+      incomeText = `You have crossed or are approaching the tax residency threshold in ${workerCountry} (${thresholdStr}). A tax treaty exists between ${employerCountry} and ${workerCountry}, which can prevent double taxation — but you must actively claim treaty relief on your tax return. Speak to a tax professional to file correctly.`;
+    } else {
+      incomeLevel = 'red';
+      incomeText = `You have crossed the tax residency threshold in ${workerCountry} (${thresholdStr}), and ${knownEC ? 'no comprehensive tax treaty appears to exist' : 'we could not confirm a tax treaty exists'} between ${employerCountry} and ${workerCountry}. You face a real risk of double taxation. Professional advice is essential.`;
+    }
+  }
+
+  if (isUSCitizen) {
+    incomeText += ` As a US citizen, the US taxes your worldwide income regardless of where you live. The Foreign Earned Income Exclusion ($132,900 for 2026) may reduce your US liability — but you must still file a US return.`;
+    if (incomeLevel === 'green') incomeLevel = 'amber';
+  }
+  if (workerCountry === 'United Kingdom') {
+    incomeText += ` Note: UK residency uses a complex ties-based test. Even 46 days in the UK can trigger residency if you have 3 or more ties (family, accommodation, work connections). Count your ties carefully.`;
+  }
+
+  // ── PE RISK ─────────────────────────────────────────
+  let peLevel, peText;
+  const highRoleJobs = ['sales','executive'];
+  const isHighRole = highRoleJobs.includes(jobFunction);
+  const workingAbove50pct = (daysPresent / 260) > 0.5 || isPermanent; // 260 = approx working days/year
+
+  if (!isEmployee) {
+    peLevel = 'green';
+    peText = `Independent contractors rarely create permanent establishment risk for the engaging company. The company has no corporate tax exposure in ${workerCountry} based on your arrangement — provided your contractor status is genuine and documented. Misclassification risk exists if the arrangement looks like employment in practice.`;
+  } else if (hasSigning) {
+    peLevel = 'red';
+    peText = `CRITICAL: This employee has authority to sign contracts on behalf of the company. Under OECD guidelines this creates an Agency Permanent Establishment immediately — regardless of days spent, job function, or whether a treaty exists. The employer likely owes corporate income tax in ${workerCountry}. This needs urgent legal advice.`;
+  } else if (isPermanent && isHighRole) {
+    peLevel = 'red';
+    peText = `A permanently placed ${jobFunction} employee creates high PE risk under OECD 2025 rules. This combination — permanent arrangement plus a revenue-generating or decision-making role — meets both the quantitative threshold and the commercial reason test. The employer may owe corporate income tax in ${workerCountry}.`;
+  } else if (workingAbove50pct && isHighRole) {
+    peLevel = 'amber';
+    peText = `Working above the 50% time threshold in ${workerCountry} with a ${jobFunction} role creates moderate to high PE risk under the OECD 2025 update. If the arrangement has a genuine commercial reason tied to the worker's location, a PE may be triggered. Review this with a corporate tax professional.`;
+  } else if (workingAbove50pct && !isHighRole) {
+    peLevel = 'amber';
+    peText = `Working above the 50% time threshold in ${workerCountry} triggers a deeper assessment under OECD 2025 guidelines. However, your ${jobFunction} role is unlikely to satisfy the commercial reason test unless you serve local clients. PE risk is moderate — monitor and document the arrangement clearly.`;
+  } else {
+    peLevel = 'green';
+    peText = `Based on the OECD 2025 safe harbour, working less than 50% of your time from ${workerCountry} in a ${jobFunction} role without contract signing authority is generally low PE risk. The employer does not appear to have a taxable corporate presence in ${workerCountry}.`;
+  }
+
+  if (hasEntity) {
+    if (peLevel === 'red') peLevel = 'amber';
+    if (peLevel === 'amber') peLevel = 'green';
+    peText += ` The employer already has a legal entity in ${workerCountry}, which significantly reduces PE exposure and allows for proper local payroll routing.`;
+  }
+
+  // ── PAYROLL ─────────────────────────────────────────
+  let payrollLevel, payrollText;
+
+  if (!isEmployee) {
+    payrollLevel = 'green';
+    payrollText = `As an independent contractor, you are responsible for your own tax declarations in ${workerCountry}. The engaging company has no payroll withholding or registration obligation for contractors in most jurisdictions.`;
+  } else if (hasEntity) {
+    payrollLevel = 'green';
+    payrollText = `With an existing legal entity in ${workerCountry}, the employer can run payroll locally. This is the correct compliant structure. Ensure employment contracts are with the local entity and payroll is processed there.`;
+  } else if (!overThreshold && !isPermanent) {
+    payrollLevel = 'amber';
+    payrollText = `No immediate payroll registration appears required, but the employer has no local entity in ${workerCountry}. If the arrangement becomes permanent or the worker crosses the residency threshold, payroll compliance will become urgent. Plan ahead now.`;
+  } else {
+    payrollLevel = 'red';
+    payrollText = `The employer likely needs to register for payroll in ${workerCountry} or engage an Employer of Record (EOR) service. Running payroll from ${employerCountry} for an employee resident in ${workerCountry} without local registration creates significant legal exposure for the employer.`;
+  }
+
+  // ── OVERALL ─────────────────────────────────────────
+  const levels = [incomeLevel, peLevel, payrollLevel];
+  let overallLevel = 'green';
+  if (levels.includes('red')) overallLevel = 'red';
+  else if (levels.includes('amber')) overallLevel = 'amber';
+
+  return {
+    incomeLevel, incomeText,
+    peLevel, peText,
+    payrollLevel, payrollText,
+    overallLevel, treaty, knownEC
+  };
+}
+
+/* ── NEXT STEPS ───────────────────────────────────────── */
+function getNextSteps(overallLevel, result) {
+  if (overallLevel === 'green') return [
+    `Keep a precise record of days spent in each country — one day over the threshold changes everything.`,
+    `Confirm your employment or contractor status is clearly documented in writing.`,
+    `Review your situation again if your arrangement becomes permanent or your role changes.`,
+    `Run this check again each January when your day count resets.`,
+  ];
+  if (overallLevel === 'amber') return [
+    `Speak to a cross-border tax professional familiar with both ${state.employerCountry} and ${state.workerCountry} within the next 30 days.`,
+    `Ask your employer to review the payroll arrangement — they may need to act to protect both of you.`,
+    result.treaty ? `A tax treaty exists — ask your tax professional how to claim relief and what forms to file.` : `No confirmed treaty between these countries — a professional needs to assess your double taxation exposure.`,
+    `Do not exceed the local residency threshold without a documented plan in place.`,
+    `Consider whether an Employer of Record (EOR) arrangement would resolve the compliance gap.`,
+  ];
+  return [
+    `Do not let this arrangement continue unchanged — the legal and financial exposure is significant.`,
+    `Your employer needs to speak to a corporate tax advisor this week about the permanent establishment risk.`,
+    `You personally need to understand your local tax filing and registration obligations in ${state.workerCountry}.`,
+    `Explore an Employer of Record (EOR) service as the fastest path to compliance — services like Deel, Remote.com, or Rippling can help.`,
+    `If the PE risk is driven by contract signing authority, review whether that authority can be formally restricted.`,
+    `File any required local tax registrations before penalties accumulate.`,
+  ];
+}
+
+/* ── CALCULATE ────────────────────────────────────────── */
+function calculate() {
+  state.citizenshipCountry = document.getElementById('citizenshipCountry').value;
+  if (!state.jobFunction || !state.signing) {
+    showToast('Please answer all questions before getting your report.');
+    return;
+  }
+
+  const result = assessRisk();
+
+  // Hide panels
+  document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('progressFill').style.width = '100%';
+
+  // Subtitle
+  document.getElementById('resultSubtitle').textContent =
+    `${state.employerCountry} employer · ${state.workerCountry} worker · ${state.daysPresent} days · ${state.classification}`;
+
+  // Risk cards
+  const cards = [
+    { label: 'Income Tax Exposure', level: result.incomeLevel, text: result.incomeText },
+    { label: 'Permanent Establishment Risk', level: result.peLevel, text: result.peText },
+    { label: 'Payroll Withholding Risk', level: result.payrollLevel, text: result.payrollText },
+  ];
+  document.getElementById('riskCards').innerHTML = cards.map(c => `
+    <div class="risk-card ${c.level}">
+      <div class="risk-card-head">
+        <span class="risk-badge">${c.level.toUpperCase()}</span>
+        <span class="risk-title">${c.label}</span>
+      </div>
+      <div class="risk-body">${c.text}</div>
+    </div>
+  `).join('');
+
+  // Next steps
+  const steps = getNextSteps(result.overallLevel, result);
+  document.getElementById('nextStepsList').innerHTML = steps.map(s => `<li>${s}</li>`).join('');
+  const titleMap = { green: '✓ Your situation looks manageable', amber: '⚠ Action recommended', red: '🚨 Urgent action required' };
+  document.getElementById('nextStepsTitle').textContent = titleMap[result.overallLevel];
+
+  // Show results
+  document.getElementById('results').style.display = 'block';
+  document.getElementById('results').scrollIntoView({behavior:'smooth', block:'start'});
+
+  // Store for sharing
+  window._lastResult = { state: {...state}, result };
+}
+
+/* ── SHARE ────────────────────────────────────────────── */
+function copyLink() {
+  const s = state;
+  const params = new URLSearchParams({
+    ec: s.employerCountry, wc: s.workerCountry, d: s.daysPresent,
+    p: s.permanent, cl: s.classification, en: s.entity,
+    cc: s.citizenshipCountry, j: s.jobFunction, sg: s.signing
+  });
+  const url = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
+  navigator.clipboard.writeText(url).then(() => showToast('Link copied to clipboard'));
+}
+
+function copyText() {
+  if (!window._lastResult) return;
+  const { state: s, result: r } = window._lastResult;
+  const levelEmoji = { green: '🟢', amber: '🟡', red: '🔴' };
+  const text = `RemoteTaxCheck Assessment\n${s.employerCountry} employer · ${s.workerCountry} worker · ${s.daysPresent} days · ${s.classification}\n\n${levelEmoji[r.incomeLevel]} Income Tax: ${r.incomeLevel.toUpperCase()}\n${levelEmoji[r.peLevel]} PE Risk: ${r.peLevel.toUpperCase()}\n${levelEmoji[r.payrollLevel]} Payroll: ${r.payrollLevel.toUpperCase()}\n\nFull assessment: https://www.remotetaxcheck.com`;
+  navigator.clipboard.writeText(text).then(() => showToast('Summary copied to clipboard'));
+}
+
+/* ── RESTART ──────────────────────────────────────────── */
+function restart() {
+  document.getElementById('results').style.display = 'none';
+  // Reset state
+  Object.keys(state).forEach(k => state[k] = '');
+  document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('selected'));
+  ['employerCountry','workerCountry','citizenshipCountry'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('daysPresent').value = '';
+  goStep(1);
+  document.getElementById('toolCard').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+/* ── TOAST ────────────────────────────────────────────── */
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+/* ── FAQ ──────────────────────────────────────────────── */
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement;
+    item.classList.toggle('open');
+  });
+});
+
+/* ── DARK MODE ────────────────────────────────────────── */
+const html = document.documentElement;
+const saved = localStorage.getItem('rtc-theme');
+if (saved) html.setAttribute('data-theme', saved);
+
+document.getElementById('themeToggle').addEventListener('click', () => {
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  const next = isDark ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('rtc-theme', next);
+});
+
+/* ── URL PARAMS (shareable links) ─────────────────────── */
+(function restoreFromParams() {
+  const p = new URLSearchParams(window.location.search);
+  if (!p.get('ec')) return;
+  const map = { ec:'employerCountry', wc:'workerCountry', d:'daysPresent',
+    p:'permanent', cl:'classification', en:'entity',
+    cc:'citizenshipCountry', j:'jobFunction', sg:'signing' };
+  Object.entries(map).forEach(([k, v]) => {
+    const val = p.get(k);
+    if (!val) return;
+    state[v] = val;
+    const sel = document.getElementById(v);
+    if (sel) sel.value = val;
+    const btns = document.querySelectorAll(`[data-group="${v}"]`);
+    btns.forEach(b => { if (b.dataset.val === val) b.classList.add('selected'); });
+  });
+  if (p.get('sg')) {
+    document.getElementById('daysPresent').value = p.get('d');
+    setTimeout(calculate, 300);
+  }
+})();
+</script>
+</body>
+</html>

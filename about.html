@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — RemoteTaxCheck</title>
+  <meta name="description" content="RemoteTaxCheck is a free tool helping remote workers and employers understand cross-border tax risk. Learn what we do and why we built it." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://www.remotetaxcheck.com/about.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{--bg:#F7F8FA;--surface:#FFFFFF;--border:#E4E7ED;--text:#1A1D23;--muted:#6B7280;--accent:#1D4ED8;--accent-lt:#EFF4FF;--green:#059669;--radius:12px;--radius-sm:8px;--shadow:0 1px 4px rgba(0,0,0,.08);--font-head:'Sora',sans-serif;--font-body:'Inter',sans-serif;}
+    [data-theme="dark"]{--bg:#0F1117;--surface:#1A1D27;--border:#2A2D38;--text:#E8EAF0;--muted:#9CA3AF;--accent:#3B82F6;--accent-lt:#1E2A45;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:var(--font-body);background:var(--bg);color:var(--text);font-size:16px;line-height:1.65;transition:background .25s,color .25s;}
+    a{color:var(--accent);text-decoration:none;}a:hover{text-decoration:underline;}
+    .container{max-width:720px;margin:0 auto;padding:0 20px;}
+    header{position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:1px solid var(--border);padding:14px 0;box-shadow:var(--shadow);}
+    .header-inner{display:flex;align-items:center;justify-content:space-between;max-width:960px;margin:0 auto;padding:0 20px;}
+    .logo{font-family:var(--font-head);font-size:1.1rem;font-weight:700;color:var(--text);letter-spacing:-.02em;}
+    .logo span{color:var(--accent);}
+    nav{display:flex;align-items:center;gap:24px;}
+    nav a{font-size:.875rem;font-weight:500;color:var(--muted);transition:color .15s;}nav a:hover{color:var(--text);text-decoration:none;}
+    .theme-toggle{background:var(--border);border:none;cursor:pointer;width:38px;height:22px;border-radius:11px;position:relative;transition:background .25s;}
+    .theme-toggle::after{content:'';position:absolute;width:16px;height:16px;border-radius:50%;background:var(--surface);top:3px;left:3px;transition:transform .25s;box-shadow:0 1px 3px rgba(0,0,0,.2);}
+    [data-theme="dark"] .theme-toggle{background:var(--accent);}[data-theme="dark"] .theme-toggle::after{transform:translateX(16px);}
+    .page-hero{padding:56px 0 40px;border-bottom:1px solid var(--border);margin-bottom:40px;}
+    .eyebrow{font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+    h1{font-family:var(--font-head);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;letter-spacing:-.03em;margin-bottom:16px;}
+    .lead{font-size:1.05rem;color:var(--muted);line-height:1.75;}
+    .content{padding-bottom:64px;}
+    .content h2{font-family:var(--font-head);font-size:1.25rem;font-weight:700;margin:36px 0 12px;letter-spacing:-.02em;}
+    .content p{color:var(--muted);margin-bottom:14px;font-size:.95rem;}
+    .content ul{padding-left:20px;margin-bottom:14px;}
+    .content li{color:var(--muted);font-size:.95rem;margin-bottom:8px;line-height:1.6;}
+    .disclaimer-box{background:var(--accent-lt);border:1px solid var(--accent);border-radius:var(--radius-sm);padding:18px 20px;margin:32px 0;}
+    .disclaimer-box p{color:var(--text);margin:0;font-size:.875rem;}
+    footer{background:var(--surface);border-top:1px solid var(--border);padding:32px 0;}
+    .footer-inner{max-width:960px;margin:0 auto;padding:0 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+    .footer-inner p{font-size:.8rem;color:var(--muted);}
+    .footer-links{display:flex;gap:16px;}
+    .footer-links a{font-size:.8rem;color:var(--muted);}
+    @media(max-width:640px){nav a{display:none;}}
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="/" class="logo">Remote<span>Tax</span>Check</a>
+    <nav><a href="/blog.html">Blog</a><a href="/about.html">About</a><a href="/contact.html">Contact</a></nav>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode"></button>
+  </div>
+</header>
+
+<div class="container">
+  <div class="page-hero">
+    <div class="eyebrow">About us</div>
+    <h1>What RemoteTaxCheck is and why it exists</h1>
+    <p class="lead">A free, independent tool that helps remote workers and employers understand their cross-border tax exposure — without lawyers, paywalls, or 40-page guides.</p>
+  </div>
+
+  <div class="content">
+    <h2>The problem we are solving</h2>
+    <p>Cross-border remote work has become completely normal. Millions of people now work for companies in one country while living in another. But the tax rules have not caught up with this reality in any practical way.</p>
+    <p>The official guidance is buried in government websites. The good advice is behind expensive consultants. The free content online is either too vague to be useful or written for corporate lawyers, not real people.</p>
+    <p>The result is that most remote workers and small employers have no idea whether their arrangement is legally compliant. They either ignore the issue and hope for the best, or spend hours reading contradictory articles and still have no clear answer.</p>
+
+    <h2>What this tool does</h2>
+    <p>RemoteTaxCheck gives you a structured risk assessment based on your specific situation — your countries, your role, your days, and your relationship with your employer. It applies current OECD guidelines and bilateral tax treaty data to produce a plain-English output that tells you where your real exposure is and what to do next.</p>
+    <p>It is not a substitute for professional advice on complex situations. But it gives you a clear starting point — which is what most people need before they know whether they need a professional at all.</p>
+
+    <h2>What we use to build the assessments</h2>
+    <ul>
+      <li>OECD Model Tax Convention guidelines, updated November 2025</li>
+      <li>Bilateral tax treaty data from IRS, HMRC, and official government sources</li>
+      <li>Country-specific tax residency rules and thresholds for 30+ countries</li>
+      <li>OECD 2025 permanent establishment guidance on the 50% working time benchmark and commercial reason test</li>
+    </ul>
+    <p>We review and update the underlying rules quarterly. The current version reflects rules as of June 2026.</p>
+
+    <h2>What this tool is not</h2>
+    <p>RemoteTaxCheck is an informational tool. It does not provide legal or tax advice. It does not know your complete personal situation. It cannot replace a qualified tax professional for complex or high-risk situations.</p>
+    <p>If your result is amber or red, please use this assessment as a starting point for a conversation with a professional — not as a final answer.</p>
+
+    <div class="disclaimer-box">
+      <p><strong>Important:</strong> All assessments provided by RemoteTaxCheck are for informational purposes only and do not constitute legal or tax advice. Tax laws change frequently. Always consult a qualified professional for your specific situation.</p>
+    </div>
+
+    <h2>Privacy</h2>
+    <p>The tool runs entirely in your browser. We do not collect, store, or transmit any information you enter into the tool. Nothing is sent to a server. You can verify this by using the tool without an internet connection after the page loads.</p>
+
+    <h2>Contact</h2>
+    <p>For questions, corrections, or feedback, please use our <a href="/contact.html">contact page</a>. If you believe any of the tax data in the tool is outdated or incorrect, we want to know — accuracy is the only thing this tool has.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <p>© 2026 RemoteTaxCheck. For informational purposes only. Not legal or tax advice.</p>
+    <div class="footer-links">
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/disclaimer.html">Disclaimer</a>
+      <a href="/contact.html">Contact</a>
+    </div>
+  </div>
+</footer>
+<script>
+  const h=document.documentElement,s=localStorage.getItem('rtc-theme');
+  if(s)h.setAttribute('data-theme',s);
+  document.getElementById('themeToggle').addEventListener('click',()=>{
+    const d=h.getAttribute('data-theme')==='dark';
+    const n=d?'light':'dark';h.setAttribute('data-theme',n);localStorage.setItem('rtc-theme',n);
+  });
+</script>
+</body></html>
