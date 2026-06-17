@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.remotetaxcheck.github.io/sitemap.xml
+Sitemap: https://remotetaxcheck.github.io/sitemap.xml
